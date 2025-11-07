@@ -1,7 +1,9 @@
 # INSY7314 - International Payments Project (Part 3)
 
 This repository contains the frontend and backend for the International Payments project. Part 3 implements an employee portal, admin management features, and *full Dockerization with security improvements requested from Part 2.
-
+## Youtube links:
+1.  [https://youtu.be/oaaIQSa7vVs] - React Application
+2.  [https://youtu.be/6U7oSlcWndA] - MongoDB
 ## Team Members
 
 Replace the placeholder entries below with the actual team names and student numbers for your submission.
