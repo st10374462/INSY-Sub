@@ -21,6 +21,16 @@ const EmployeeDashboard = () => {
       const res = await fetch('/api/employee/transactions?status=pending', {
         headers: { Authorization: `Bearer ${token}` }
       });
+      if (!res.ok) {
+        if (res.status === 401 || res.status === 403) {
+          setError('Unauthorized. Please login again.');
+          setTransactions([]);
+        } else {
+          const errBody = await res.json().catch(() => ({}));
+          setError(errBody.message || 'Failed to load transactions');
+        }
+        return;
+      }
       const data = await res.json();
       setTransactions(data.transactions || []);
     } catch (err) {
@@ -37,6 +47,16 @@ const EmployeeDashboard = () => {
       const res = await fetch('/api/employee/transactions?status=all', {
         headers: { Authorization: `Bearer ${token}` }
       });
+      if (!res.ok) {
+        if (res.status === 401 || res.status === 403) {
+          setError('Unauthorized. Please login again.');
+          setTransactions([]);
+        } else {
+          const errBody = await res.json().catch(() => ({}));
+          setError(errBody.message || 'Failed to load history');
+        }
+        return;
+      }
       const data = await res.json();
       setTransactions(data.transactions || []);
     } catch (err) {
@@ -80,7 +100,10 @@ const EmployeeDashboard = () => {
       {error && <div className="mb-4 text-red-600">{error}</div>}
 
       <div className="bg-white rounded shadow overflow-hidden">
-        <table className="min-w-full">
+        {transactions.length === 0 ? (
+          <div className="p-6 text-center text-gray-600">{error ? error : 'No transactions found.'}</div>
+        ) : (
+          <table className="min-w-full">
           <thead>
             <tr>
               <th className="px-4 py-2 text-left">ID</th>
